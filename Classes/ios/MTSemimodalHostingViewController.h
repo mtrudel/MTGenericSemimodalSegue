@@ -10,4 +10,5 @@
 @property (nonatomic) CGFloat duration;
 
 - (void)presentViewController:(UIViewController *)viewController;
+
 @end

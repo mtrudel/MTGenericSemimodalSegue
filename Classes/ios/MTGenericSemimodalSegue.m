@@ -17,4 +17,12 @@
   }];
 }
 
+- (CGSize)fullscreenSize {
+  CGSize size = [[UIScreen mainScreen] bounds].size;
+  if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+    size = CGSizeMake(size.height, size.width);
+  }
+  return size;
+}
+
 @end

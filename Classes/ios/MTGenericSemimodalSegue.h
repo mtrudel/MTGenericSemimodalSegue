@@ -8,4 +8,6 @@
 
 - (void)performWithDuration:(CGFloat)duration animationBlock:(void(^)())animation unwindAnimationBlock:(void(^)())unwindAnimation;
 
+- (CGSize)fullscreenSize;
+
 @end

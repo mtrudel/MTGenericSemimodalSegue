@@ -5,10 +5,14 @@
 #import "MTSemimodalHostingViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface MTSemimodalHostingViewController ()
+@property (nonatomic, weak) UIImageView *screenshotView;
+@end
+
 @implementation MTSemimodalHostingViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-  [self.view addSubview:[self screenshot]];
+  [self setScreenshotBackground];
 }
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent {
@@ -35,42 +39,54 @@
   }];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  [self setScreenshotBackground];
+}
+
+- (void)setScreenshotBackground {
+  UIView *oldScreenshot = self.screenshotView;
+  self.screenshotView = [self screenshot];
+  [self.view insertSubview:self.screenshotView atIndex:0];
+  [oldScreenshot removeFromSuperview];
+}
+
 - (UIImageView *)screenshot {
-  CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-  UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+  CGSize imageSize = CGSizeZero;
 
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  // Iterate over every window from back to front
-  for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
-    if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen]) {
-      // -renderInContext: renders in the coordinate space of the layer,
-      // so we must first apply the layer's geometry to the graphics context
-      CGContextSaveGState(context);
-      // Center the context around the window's anchor point
-      CGContextTranslateCTM(context, [window center].x, [window center].y);
-      // Apply the window's transform about the anchor point
-      CGContextConcatCTM(context, [window transform]);
-      // Offset by the portion of the bounds left of and above the anchor point
-      CGContextTranslateCTM(context,
-                            -[window bounds].size.width * [[window layer] anchorPoint].x,
-                            -[window bounds].size.height * [[window layer] anchorPoint].y);
-
-      // Render the layer hierarchy to the current context
-      [[window layer] renderInContext:context];
-
-      // Restore the context
-      CGContextRestoreGState(context);
-    }
+  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+  if (UIInterfaceOrientationIsPortrait(orientation)) {
+    imageSize = [UIScreen mainScreen].bounds.size;
+  } else {
+    imageSize = CGSizeMake([UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
   }
 
-  // Retrieve the screenshot image
+  UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, window.center.x, window.center.y);
+    CGContextConcatCTM(context, window.transform);
+    CGContextTranslateCTM(context, -window.bounds.size.width * window.layer.anchorPoint.x, -window.bounds.size.height * window.layer.anchorPoint.y);
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+      CGContextRotateCTM(context, M_PI_2);
+      CGContextTranslateCTM(context, 0, -imageSize.width);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+      CGContextRotateCTM(context, -M_PI_2);
+      CGContextTranslateCTM(context, -imageSize.height, 0);
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+      CGContextRotateCTM(context, M_PI);
+      CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
+    }
+    [window.layer renderInContext:context];
+    CGContextRestoreGState(context);
+  }
+
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-
   UIGraphicsEndImageContext();
-
   UIImageView* screenshot = [[UIImageView alloc] initWithImage:image];
   screenshot.frame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+  screenshot.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   return screenshot;
 }
 

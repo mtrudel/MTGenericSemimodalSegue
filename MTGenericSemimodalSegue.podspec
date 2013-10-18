@@ -1,4 +1,4 @@
-POD_VERSION = "0.0.4"
+POD_VERSION = "0.0.5"
 Pod::Spec.new do |s|
   s.name          = "MTGenericSemimodalSegue"
   s.version       = POD_VERSION

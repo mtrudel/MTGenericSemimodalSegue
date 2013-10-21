@@ -4,9 +4,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MTSemimodalHostingViewController.h"
+
 @interface MTGenericSemimodalSegue : UIStoryboardSegue
 
-- (void)performWithDuration:(CGFloat)duration animationBlock:(void(^)())animation unwindAnimationBlock:(void(^)())unwindAnimation;
+- (void)performWithDuration:(CGFloat)duration animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation;
 
 - (CGSize)fullscreenSize;
 

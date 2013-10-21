@@ -22,7 +22,9 @@
   __weak typeof(viewControllerToPresent) weakViewController = viewControllerToPresent;
   __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:self.duration
-                   animations:self.animationBlock
+                   animations:^{
+                     self.animationBlock(self);
+                   }
                    completion:^(BOOL finished) {
                      [weakViewController didMoveToParentViewController:weakSelf];
                    }];
@@ -33,7 +35,11 @@
 
   [containedViewController willMoveToParentViewController:nil];
 
-  [UIView animateWithDuration:self.duration animations:self.unwindBlock completion:^(BOOL finished) {
+  [UIView animateWithDuration:self.duration
+                   animations:^{
+                     self.unwindBlock(self);
+                   }
+                   completion:^(BOOL finished) {
     [containedViewController removeFromParentViewController];
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
   }];

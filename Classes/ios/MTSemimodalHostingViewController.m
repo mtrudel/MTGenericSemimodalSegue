@@ -7,12 +7,25 @@
 
 @interface MTSemimodalHostingViewController ()
 @property (nonatomic, weak) UIImageView *screenshotView;
+@property (nonatomic, strong) UIView *darkeningView;
 @end
 
 @implementation MTSemimodalHostingViewController
 
+- (void)viewDidLoad {
+  self.darkeningView = [[UIView alloc] initWithFrame:self.view.bounds];
+  [self setBackgroundDarkeningFactor:[self backgroundDarkeningFactor]]; // Prime the initial alpha
+  self.darkeningView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self.view addSubview:self.darkeningView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [self setScreenshotBackground];
+}
+
+- (void)setBackgroundDarkeningFactor:(CGFloat)backgroundDarkeningFactor {
+  _backgroundDarkeningFactor = backgroundDarkeningFactor;
+  self.darkeningView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:backgroundDarkeningFactor];
 }
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent {

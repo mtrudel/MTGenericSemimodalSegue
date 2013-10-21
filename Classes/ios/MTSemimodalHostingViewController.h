@@ -9,6 +9,14 @@
 @property (nonatomic, strong) void(^unwindBlock)(MTSemimodalHostingViewController *host);
 @property (nonatomic) CGFloat duration;
 
+/* 
+ How much to darken the background view. Corresponds directly to the alpha value
+ of a black masking view on top of the background. Defaults to 0 (no darkening). 
+ Animatable.
+ */
+@property (nonatomic) CGFloat backgroundDarkeningFactor;
+
+
 - (void)presentViewController:(UIViewController *)viewController;
 
 @end

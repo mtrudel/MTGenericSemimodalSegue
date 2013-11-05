@@ -84,29 +84,20 @@
   CGContextRef context = UIGraphicsGetCurrentContext();
   for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
     CGContextSaveGState(context);
-    if (window == self.view.window) {
-      CGRect oldFrame = self.presentingViewController.view.frame;
-      self.presentingViewController.view.frame = CGRectMake(0, 0, imageSize.width, imageSize.height);
-      [self.presentingViewController.view layoutIfNeeded];
-      [self.presentingViewController.view.layer renderInContext:context];
-      self.presentingViewController.view.frame = oldFrame;
-      [self.presentingViewController.view layoutIfNeeded];
-    } else {
-      CGContextTranslateCTM(context, window.center.x, window.center.y);
-      CGContextConcatCTM(context, window.transform);
-      CGContextTranslateCTM(context, -window.bounds.size.width * window.layer.anchorPoint.x, -window.bounds.size.height * window.layer.anchorPoint.y);
-      if (orientation == UIInterfaceOrientationLandscapeLeft) {
-        CGContextRotateCTM(context, M_PI_2);
-        CGContextTranslateCTM(context, 0, -imageSize.width);
-      } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-        CGContextRotateCTM(context, -M_PI_2);
-        CGContextTranslateCTM(context, -imageSize.height, 0);
-      } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
-        CGContextRotateCTM(context, M_PI);
-        CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
-      }
-      [window.layer renderInContext:context];
+    CGContextTranslateCTM(context, window.center.x, window.center.y);
+    CGContextConcatCTM(context, window.transform);
+    CGContextTranslateCTM(context, -window.bounds.size.width * window.layer.anchorPoint.x, -window.bounds.size.height * window.layer.anchorPoint.y);
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+      CGContextRotateCTM(context, M_PI_2);
+      CGContextTranslateCTM(context, 0, -imageSize.width);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+      CGContextRotateCTM(context, -M_PI_2);
+      CGContextTranslateCTM(context, -imageSize.height, 0);
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+      CGContextRotateCTM(context, M_PI);
+      CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
     }
+    [window.layer renderInContext:context];
     CGContextRestoreGState(context);
   }
 

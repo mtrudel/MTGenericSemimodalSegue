@@ -23,6 +23,10 @@
   [self setScreenshotBackground];
 }
 
+- (BOOL)shouldAutorotate {
+  return !self.disableAutoRotation;
+}
+
 - (void)setBackgroundDarkeningFactor:(CGFloat)backgroundDarkeningFactor {
   _backgroundDarkeningFactor = backgroundDarkeningFactor;
   self.darkeningView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:backgroundDarkeningFactor];

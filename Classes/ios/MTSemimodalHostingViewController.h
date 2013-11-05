@@ -16,6 +16,10 @@
  */
 @property (nonatomic) CGFloat backgroundDarkeningFactor;
 
+/*
+ Should we disable rotation while presented. Defaults to NO
+ */
+@property (nonatomic) BOOL disableAutoRotation;
 
 - (void)presentViewController:(UIViewController *)viewController;
 

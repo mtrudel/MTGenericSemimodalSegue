@@ -3,18 +3,13 @@
 //
 
 #import "MTGenericSemimodalSegue.h"
-#import "MTSemimodalHostingViewController.h"
+#import "UIViewController+GenericSemimodal.h"
 
 @implementation MTGenericSemimodalSegue
 
 - (void)performWithDuration:(CGFloat)duration animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation {
-  MTSemimodalHostingViewController *hostController = [[MTSemimodalHostingViewController alloc] init];
-  hostController.unwindBlock = unwindAnimation;
-  hostController.animationBlock = animation;
-  hostController.duration = duration;
-  [self.sourceViewController presentViewController:hostController animated:NO completion:^{
-    [hostController presentViewController:self.destinationViewController];
-  }];
+  UIViewController *presentingController = self.sourceViewController;
+  [presentingController presentViewController:self.destinationViewController withDuration:duration animationBlock:animation unwindAnimationBlock:unwindAnimation];
 }
 
 - (CGSize)fullscreenSize {

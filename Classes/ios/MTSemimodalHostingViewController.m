@@ -38,6 +38,10 @@
   [self addChildViewController:viewControllerToPresent];
   [self.view addSubview:viewControllerToPresent.view];
 
+  if (self.preAppearanceBlock) {
+    self.preAppearanceBlock(self);
+  }
+
   __weak typeof(viewControllerToPresent) weakViewController = viewControllerToPresent;
   __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:self.duration

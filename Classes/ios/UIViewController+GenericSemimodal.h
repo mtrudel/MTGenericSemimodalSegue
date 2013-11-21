@@ -11,6 +11,6 @@
 
 @interface UIViewController (GenericSemimodal)
 
-- (void)presentViewController:(UIViewController *)viewController withDuration:(CGFloat)duration animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation;
+- (void)presentViewController:(UIViewController *)viewController withDuration:(CGFloat)duration preAppearanceBlock:(void(^)(MTSemimodalHostingViewController *host))preAppearance animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation;
 
 @end

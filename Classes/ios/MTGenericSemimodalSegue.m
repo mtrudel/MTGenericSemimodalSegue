@@ -7,17 +7,9 @@
 
 @implementation MTGenericSemimodalSegue
 
-- (void)performWithDuration:(CGFloat)duration animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation {
+- (void)performWithDuration:(CGFloat)duration preAppearanceBlock:(void(^)(MTSemimodalHostingViewController *host))preAppearance animationBlock:(void(^)(MTSemimodalHostingViewController *host))animation unwindAnimationBlock:(void(^)(MTSemimodalHostingViewController *host))unwindAnimation {
   UIViewController *presentingController = self.sourceViewController;
-  [presentingController presentViewController:self.destinationViewController withDuration:duration animationBlock:animation unwindAnimationBlock:unwindAnimation];
-}
-
-- (CGSize)fullscreenSize {
-  CGSize size = [[UIScreen mainScreen] bounds].size;
-  if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-    size = CGSizeMake(size.height, size.width);
-  }
-  return size;
+  [presentingController presentViewController:self.destinationViewController withDuration:duration preAppearanceBlock:preAppearance animationBlock:animation unwindAnimationBlock:unwindAnimation];
 }
 
 @end

@@ -21,6 +21,11 @@
  */
 @property (nonatomic) BOOL disableAutoRotation;
 
+/*
+ Should touches on the non-presented view result in a dismissal. Defaults to NO
+ */
+@property (nonatomic) BOOL dismissOnBackgroundTouch;
+
 - (void)presentViewController:(UIViewController *)viewController;
 
 @end

@@ -16,6 +16,8 @@
   self.darkeningView = [[UIView alloc] initWithFrame:self.view.bounds];
   [self setBackgroundDarkeningFactor:[self backgroundDarkeningFactor]]; // Prime the initial alpha
   self.darkeningView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapInBackground:)];
+  [self.darkeningView addGestureRecognizer:tapGestureRecognizer];
   [self.view addSubview:self.darkeningView];
 }
 
@@ -65,6 +67,12 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
   [self setScreenshotBackground];
+}
+
+- (void)didTapInBackground:(UITapGestureRecognizer *)gestureRecognizer {
+  if (self.dismissOnBackgroundTouch) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
 - (void)setScreenshotBackground {

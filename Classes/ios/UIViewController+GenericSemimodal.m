@@ -16,9 +16,16 @@
   hostController.animationBlock = animation;
   hostController.preAppearanceBlock = preAppearance;
   hostController.duration = duration;
+  [self viewControllerThatWillBePresenting].modalPresentationStyle = UIModalPresentationCurrentContext;
   [self presentViewController:hostController animated:NO completion:^{
     [hostController presentViewController:viewController];
   }];
+}
+
+- (UIViewController *)viewControllerThatWillBePresenting {
+  UIViewController *vc;
+  for (vc = self; vc.parentViewController; vc = vc.parentViewController);
+  return vc;
 }
 
 @end

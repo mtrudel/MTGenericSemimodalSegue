@@ -68,6 +68,9 @@
 - (void)didTapInBackground:(UITapGestureRecognizer *)gestureRecognizer {
   if (self.dismissOnBackgroundTouch) {
     [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.delegate respondsToSelector:@selector(semimodalViewControllerDidDismissOnBackgroundTouch:)]) {
+      [self.delegate semimodalViewControllerDidDismissOnBackgroundTouch:self];
+    }
   }
 }
 

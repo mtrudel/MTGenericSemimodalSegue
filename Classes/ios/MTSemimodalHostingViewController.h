@@ -4,7 +4,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class MTSemimodalHostingViewController;
+
+@protocol MTSemimodalViewControllerDelegate <NSObject>
+@optional
+- (void)semimodalViewControllerDidDismissOnBackgroundTouch:(MTSemimodalHostingViewController *)semimodalController;
+@end
+
 @interface MTSemimodalHostingViewController : UIViewController
+@property (nonatomic, weak) id<MTSemimodalViewControllerDelegate> delegate;
 @property (nonatomic, strong) void(^preAppearanceBlock)(MTSemimodalHostingViewController *host);
 @property (nonatomic, strong) void(^animationBlock)(MTSemimodalHostingViewController *host);
 @property (nonatomic, strong) void(^unwindBlock)(MTSemimodalHostingViewController *host);

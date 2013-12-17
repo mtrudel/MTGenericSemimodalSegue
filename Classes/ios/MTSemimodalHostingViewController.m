@@ -60,17 +60,17 @@
                      self.unwindBlock(self);
                    }
                    completion:^(BOOL finished) {
-    [containedViewController removeFromParentViewController];
-    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+                     [containedViewController removeFromParentViewController];
+                     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+                     if ([self.delegate respondsToSelector:@selector(semimodalViewControllerDidDismiss:)]) {
+                       [self.delegate semimodalViewControllerDidDismiss:self];
+                     }
   }];
 }
 
 - (void)didTapInBackground:(UITapGestureRecognizer *)gestureRecognizer {
   if (self.dismissOnBackgroundTouch) {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if ([self.delegate respondsToSelector:@selector(semimodalViewControllerDidDismissOnBackgroundTouch:)]) {
-      [self.delegate semimodalViewControllerDidDismissOnBackgroundTouch:self];
-    }
   }
 }
 

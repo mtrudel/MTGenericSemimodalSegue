@@ -8,7 +8,7 @@
 
 @protocol MTSemimodalViewControllerDelegate <NSObject>
 @optional
-- (void)semimodalViewControllerDidDismissOnBackgroundTouch:(MTSemimodalHostingViewController *)semimodalController;
+- (void)semimodalViewControllerDidDismiss:(MTSemimodalHostingViewController *)semimodalController;
 @end
 
 @interface MTSemimodalHostingViewController : UIViewController

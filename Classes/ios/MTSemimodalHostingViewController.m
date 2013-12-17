@@ -65,6 +65,9 @@
                      if ([self.delegate respondsToSelector:@selector(semimodalViewControllerDidDismiss:)]) {
                        [self.delegate semimodalViewControllerDidDismiss:self];
                      }
+                     if (completion) {
+                       completion();
+                     }
   }];
 }
 

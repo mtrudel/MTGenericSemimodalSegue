@@ -16,6 +16,7 @@
   hostController.animationBlock = animation;
   hostController.preAppearanceBlock = preAppearance;
   hostController.duration = duration;
+  hostController.supportedInterfaceOrientations = self.supportedInterfaceOrientations;
   hostController.delegate = (id<MTSemimodalViewControllerDelegate>)self;
   [self viewControllerThatWillBePresenting].modalPresentationStyle = UIModalPresentationCurrentContext;
   [self presentViewController:hostController animated:NO completion:^{

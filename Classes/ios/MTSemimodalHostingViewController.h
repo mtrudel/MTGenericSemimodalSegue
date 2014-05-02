@@ -12,6 +12,7 @@
 @end
 
 @interface MTSemimodalHostingViewController : UIViewController
+@property (nonatomic) NSUInteger supportedInterfaceOrientations;
 @property (nonatomic, weak) id<MTSemimodalViewControllerDelegate> delegate;
 @property (nonatomic, strong) void(^preAppearanceBlock)(MTSemimodalHostingViewController *host);
 @property (nonatomic, strong) void(^animationBlock)(MTSemimodalHostingViewController *host);

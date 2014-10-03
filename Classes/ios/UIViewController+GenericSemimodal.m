@@ -18,7 +18,11 @@
   hostController.duration = duration;
   hostController.supportedInterfaceOrientations = self.supportedInterfaceOrientations;
   hostController.delegate = (id<MTSemimodalViewControllerDelegate>)self;
-  [self viewControllerThatWillBePresenting].modalPresentationStyle = UIModalPresentationCurrentContext;
+  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    hostController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+  } else {
+    [self viewControllerThatWillBePresenting].modalPresentationStyle = UIModalPresentationCurrentContext;
+  }
   [self presentViewController:hostController animated:NO completion:^{
     [hostController presentViewController:viewController];
   }];

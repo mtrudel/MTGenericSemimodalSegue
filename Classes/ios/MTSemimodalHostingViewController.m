@@ -33,6 +33,13 @@
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent {
   [self addChildViewController:viewControllerToPresent];
+
+  if (CGSizeEqualToSize(viewControllerToPresent.view.frame.size, self.view.frame.size)) {
+    viewControllerToPresent.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  } else {
+    viewControllerToPresent.view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  }
+
   [self.view addSubview:viewControllerToPresent.view];
 
   if (self.preAppearanceBlock) {

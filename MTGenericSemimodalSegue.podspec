@@ -1,4 +1,4 @@
-version = "0.0.18"
+version = "0.0.19"
 Pod::Spec.new do |s|
   s.name          = "MTGenericSemimodalSegue"
   s.version       = version

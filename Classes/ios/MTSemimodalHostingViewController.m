@@ -12,6 +12,7 @@
 @implementation MTSemimodalHostingViewController
 
 - (void)viewDidLoad {
+  [super viewDidLoad];
   self.view.backgroundColor = [UIColor clearColor];
   // Add a subview so that we can do tap tracking without having to discriminate which view it landed in
   self.darkeningView = [[UIView alloc] initWithFrame:self.view.bounds];
